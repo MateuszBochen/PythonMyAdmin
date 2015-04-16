@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+  <meta charset="utf-8" />
+
+  <!-- Set the viewport width to device width for mobile -->
+  <meta name="viewport" content="width=device-width" />
+
+  <title>PythonMyAdmin</title>
+
+  <!-- Included CSS Files, use foundation.css if you do not want minified code -->
+  <link rel="stylesheet" href="$fw.tFile('css/foundation.css')">
+  <link rel="stylesheet" href="$fw.tFile('css/font-awesome/css/font-awesome.css')">
+  
+  <script src="http://code.jquery.com/jquery-1.11.1.min.js"></script>
+    <script src="$fw.tFile('js/admin.js')"></script>
+    <script src="$fw.tFile('js/jquery.foundation.reveal.js')"></script>
+  
+
+ <!-- szary 5B5B5B -->
+  
+</head>
+
+    <body>
+        <div >
+            <div style="width: 20%; float: left; background-color: #5B5B5B;" >
+                <div class="row" >
+                    <div class="columns twelve">
+                        $fw.shwoModule('Databases')
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="columns twelve">
+                        $fw.shwoModule('TablesList')
+                    </div>
+                </div>
+            </div>
+            
+            <div style="width: 80%; float: left;" >
+                <div class="alert-box-handle">
+                    <div class="alert-box-holder">
+                    
+                        #if($successNoticcess)
+                            <div class="row" >
+                                <div class="columns eleven centered"> 
+                                    <div class="alert-box success">
+                                        $successNoticcess
+                                        <a href="" class="close">&times;</a>
+                                    </div>
+                                </div>
+                            </div>
+                        #end
+                        #if($errorNoticcess)
+                            <div class="row" >
+                                <div class="columns eleven centered"> 
+                                    <div class="alert-box alert">
+                                        $errorNoticcess
+                                        <a href="" class="close">&times;</a>
+                                    </div>
+                                </div>
+                            </div>
+                        #end
+                        #if($errorSecondary)
+                            <div class="row" >
+                                <div class="columns eleven centered"> 
+                                    <div class="alert-box secondary">
+                                        $errorSecondary
+                                        <a href="" class="close">&times;</a>
+                                    </div>
+                                </div>
+                            </div>
+                        #end
+                    </div>
+                </div>
+                <div>
+                    $content                    
+                    
+                </div>
+            </div>
+        </div>
+    </body>
+</html>
+
+<script>
+
+$(document).ready(function(){
+   setMaxHeightForScrollElements()
+});
+
+
+function setMaxHeightForScrollElements(){
+    var maxHeight = $(window).height() -70;
+    $('.scrollbar.content, .scrollbar-action').css('max-height', maxHeight);
+    
+    $('.scrollbar.content').scroll(function(e){
+        $('.scrollbar-action').scrollTop(e.target.scrollTop)
+        //console.log(e.target.scrollTop);
+    });
+    
+}
+
+</script>

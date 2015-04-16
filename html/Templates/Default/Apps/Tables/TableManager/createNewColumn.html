@@ -1,0 +1,390 @@
+<nav class="top-bar">
+    <ul>
+        <li><a href="$fw.getBack()" >Back</a></li> 
+        <li><a href="$fw.path(('Tables/Show/browse/'+$data.table))" >Browse</a></li>        
+        <li><a href="$fw.path(('Tables/Show/struct/'+$data.table))" >Structure</a></li>
+        <li class="has-button" ><a class="button addNewColumn" href="#" >Add new column</a></li>  
+        <li class="has-button" ><a class="button success saveTable" href="#" >Save</a></li>   
+    </ul>
+</nav>
+
+
+<form action="$fw.path(('Tables/TableManager/saveNewColumns/'+$data.table+'/'+$data.direction+'/'+$data.column))" method="post" id="idform" >
+    <div class="row collapse">
+        
+        <div class="columns twelve scrollbar content">
+            <table>
+                <thead> 
+                    <th>Delete</th>
+                    <th>Name</th>
+                    <th>Type</th>
+                    <th>Length</th>
+                    <th>Defaults</th>
+                    <th>Collation</th>
+                    <th>Attributes</th>
+                    <th>Is NULL</th>
+                    <th>Index</th>
+                    <th>Auto increment</th>                   
+                    <th>Comment</th>
+                </thead>
+                <tbody id="after" >
+                #if($data.tableStruct.columns.controlInput)                    
+                   #set ($index = 0)
+                   #foreach($value in $data.tableStruct.columns.controlInput)
+                       
+                        
+                        <tr>
+                            <td style="text-align: center;" >
+                                #if($index == 0)
+                                    -
+                                #else
+                                    <a href="#" onclick="$(this).parent().parent().remove(); return false;" class="icon-remove action-icon alert" ></a> 
+                                #end
+                            </td>
+                            <td id="tdName" >
+                                <input type="text" class="medium" name="columnName" value="$data.tableStruct.columns.columnName[$index]"  />
+                                <input type="hidden" class="" name="controlInput" value="1"  />
+                            </td>
+                            <td id="tdType" >
+                                <select name="columnType"class="medium" >
+                                    <option value="$data.tableStruct.columns.columnType[$index]" >$data.tableStruct.columns.columnType[$index]</option>
+                                    <option value="INT" >INT</option>
+                                    <option value="VARCHAR" >VARCHAR</option>
+                                    <option value="TEXT" >TEXT</option>
+                                    <option value="DATE" >DATE</option>
+                                    
+                                    <optgroup label="Numeric">
+                                        <option value="TINYINT" >TINYINT</option>
+                                        <option value="SMALLINT" >SMALLINT</option>
+                                        <option value="MEDIUMINT" >MEDIUMINT</option>
+                                        <option value="INT" >INT</option>
+                                        <option value="BIGINT" >BIGINT</option>
+                                        <option disabled="disabled">-</option>
+                                        <option value="DECIMAL" >DECIMAL</option>
+                                        <option value="FLOAT" >FLOAT</option>
+                                        <option value="DOUBLE" >DOUBLE</option>
+                                        <option value="REAL" >REAL</option>
+                                        <option disabled="disabled">-</option>
+                                        <option value="BIT" >BIT</option>
+                                        <option value="BOOLEAN" >BOOLEAN</option>
+                                        <option value="SERIAL" >SERIAL</option>
+                                    </optgroup>
+                                    <optgroup label="Date and time">
+                                        <option value="DATE" >DATE</option>
+                                        <option value="DATETIME" >DATETIME</option>
+                                        <option value="TIMESTAMP" >TIMESTAMP</option>
+                                        <option value="TIME" >TIME</option>
+                                        <option value="YEAR" >YEAR</option>
+                                    </optgroup>
+                                    <optgroup label="Strings">
+                                        <option value="CHAR" >CHAR</option>
+                                        <option value="VARCHAR" >VARCHAR</option>
+                                        <option disabled="disabled">-</option>
+                                        <option value="TINYTEXT" >TINYTEXT</option>
+                                        <option value="TEXT" >TEXT</option>
+                                        <option value="MEDIUMTEXT" >MEDIUMTEXT</option>
+                                        <option value="LONGTEXT" >LONGTEXT</option>
+                                        <option disabled="disabled">-</option>
+                                        <option value="BINARY" >BINARY</option>
+                                        <option value="VARBINARY" >VARBINARY</option>
+                                        <option disabled="disabled">-</option>
+                                        <option value="TINYBLOB" >TINYBLOB</option>
+                                        <option value="MEDIUMBLOB" >MEDIUMBLOB</option>
+                                        <option value="BLOB" >BLOB</option>
+                                        <option value="LONGBLOB" >LONGBLOB</option>
+                                        <option disabled="disabled">-</option>
+                                        <option value="ENUM ">ENUM</option>
+                                        <option value="SET" >SET</option>
+                                    </optgroup>
+                                    <optgroup label="Spatial">
+                                        <option value="GEOMETRY" >GEOMETRY</option>
+                                        <option value="POINT" >POINT</option>
+                                        <option value="LINESTRING" >LINESTRING</option>
+                                        <option value="POLYGON" >POLYGON</option>
+                                        <option value="MULTIPOINT" >MULTIPOINT</option>
+                                        <option value="MULTILINESTRING" >MULTILINESTRING</option>
+                                        <option value="MULTIPOLYGON" >MULTIPOLYGON</option>
+                                        <option value="GEOMETRYCOLLECTION" >GEOMETRYCOLLECTION</option>
+                                    </optgroup>
+                                </select>
+                            </td>
+                            <td id="tdLength" >
+                                <input type="text" name="columnLength" value="$data.tableStruct.columns.columnLength[$index]" class="medium" />
+                            </td>
+                            <td id="tdDefaultType" >
+                                <select name="columnDefaultType" class="medium defaultValue">
+                                    <option value="" >None</option>
+                                    <option value="USER_DEFINED" #if($data.tableStruct.columns.columnDefaultType[$index] == 'USER_DEFINED') selected="selected" #end >Defined as follows:</option>
+                                    <option value="NULL" #if($data.tableStruct.columns.columnDefaultType[$index] == 'NULL') selected="selected" #end >NULL</option>
+                                    <option value="CURRENT_TIMESTAMP" #if($data.tableStruct.columns.columnDefaultType[$index] == 'CURRENT_TIMESTAMP') selected="selected" #end >CURRENT TIMESTAMP</option>
+                                </select>
+                            </td>
+                            <td id="tdCollations" >
+                                <select name="columnCollations" class="medium" >
+                                     <option value=""> - </option>
+                                    #foreach($collation in $data.collations)
+                                        <option value="$collation[0];$collation[1]" #if($data.tableStruct.columns.columnCollations[$index] == $collation[0]+';'+$collation[1]) selected="selected" #end>$collation[0]</option>
+                                    #end
+                                </select>
+                            </td>
+                            <td id="tdAttribute" >
+                                <select name="columnAttribute" class="medium" >
+                                    <option value=""/>
+                                    <option value="BINARY" #if($data.tableStruct.columns.columnAttribute[$index] == 'BINARY') selected="selected" #end >BINARY</option>
+                                    <option value="UNSIGNED" #if($data.tableStruct.columns.columnAttribute[$index] == 'UNSIGNED') selected="selected" #end  >UNSIGNED</option>
+                                    <option value="UNSIGNED ZEROFILL" #if($data.tableStruct.columns.columnAttribute[$index] == 'UNSIGNED ZEROFILL') selected="selected" #end >UNSIGNED ZEROFILL</option>
+                                    <option value="CURRENT_TIMESTAMP" #if($data.tableStruct.columns.columnAttribute[$index] == 'CURRENT_TIMESTAMP') selected="selected" #end>on update CURRENT_TIMESTAMP</option>
+                                </select>
+                            </td>
+                            <td id="tdIsNULL" style="text-align: center;" >
+                                <select name="columnIsNULL" class="medium">
+                                    <option value="0" >NO</option>
+                                    <option value="1" #if($data.tableStruct.columns.columnIsNULL[$index] == '1') selected="selected"#end >YES</option>
+                                </select>
+                                
+                            </td>
+                            <td id="tdIndex" >
+                                <select name="columnIndex" class="medium" >
+                                    <option value="none">---</option>
+                                    <option value="PRIMARY" #if($data.tableStruct.columns.columnIndex[$index] == 'PRIMARY') selected="selected" #end >PRIMARY</option>
+                                    <option value="UNIQUE" #if($data.tableStruct.columns.columnIndex[$index] == 'UNIQUE') selected="selected" #end >UNIQUE</option>
+                                    <option value="INDEX" #if($data.tableStruct.columns.columnIndex[$index] == 'INDEX') selected="selected" #end >INDEX</option>
+                                    <option value="FULLTEXT" #if($data.tableStruct.columns.columnIndex[$index] == 'FULLTEXT') selected="selected" #end >FULLTEXT</option>
+                                </select>
+                            </td>
+                            <td id="tdAutoIncrement" style="text-align: center;" >
+                                <select name="columnAutoIncrement" class="medium">
+                                    <option value="0" >NO</option>
+                                    <option value="1" #if($data.tableStruct.columns.columnAutoIncrement[$index] == '1') selected="selected"#end >YES</option>
+                                </select>
+                                
+                            </td>
+                            
+                            <td id="tdComment">
+                                <input type="text" name="columnComment" value="" class="medium" value="$data.tableStruct.columns.columnComment[$index]" />
+                            </td>
+                        </tr>
+                        
+                    #set ($index = $index + 1)
+                   #end
+                #else
+                
+                    <tr>
+                        <td style="text-align: center;">
+                            - 
+                        </td>
+                        <td id="tdName" >
+                            <input type="text" class="medium" name="columnName" value=""  />
+                            <input type="hidden" class="" name="controlInput" value="1"  />
+                        </td>
+                        <td id="tdType" >
+                            <select name="columnType"class="medium" >
+                                <option value="INT" >INT</option>
+                                <option value="VARCHAR" >VARCHAR</option>
+                                <option value="TEXT" >TEXT</option>
+                                <option value="DATE" >DATE</option>
+                                
+                                <optgroup label="Numeric">
+                                    <option value="TINYINT" >TINYINT</option>
+                                    <option value="SMALLINT" >SMALLINT</option>
+                                    <option value="MEDIUMINT" >MEDIUMINT</option>
+                                    <option value="INT" >INT</option>
+                                    <option value="BIGINT" >BIGINT</option>
+                                    <option disabled="disabled">-</option>
+                                    <option value="DECIMAL" >DECIMAL</option>
+                                    <option value="FLOAT" >FLOAT</option>
+                                    <option value="DOUBLE" >DOUBLE</option>
+                                    <option value="REAL" >REAL</option>
+                                    <option disabled="disabled">-</option>
+                                    <option value="BIT" >BIT</option>
+                                    <option value="BOOLEAN" >BOOLEAN</option>
+                                    <option value="SERIAL" >SERIAL</option>
+                                </optgroup>
+                                <optgroup label="Date and time">
+                                    <option value="DATE" >DATE</option>
+                                    <option value="DATETIME" >DATETIME</option>
+                                    <option value="TIMESTAMP" >TIMESTAMP</option>
+                                    <option value="TIME" >TIME</option>
+                                    <option value="YEAR" >YEAR</option>
+                                </optgroup>
+                                <optgroup label="Strings">
+                                    <option value="CHAR" >CHAR</option>
+                                    <option value="VARCHAR" >VARCHAR</option>
+                                    <option disabled="disabled">-</option>
+                                    <option value="TINYTEXT" >TINYTEXT</option>
+                                    <option value="TEXT" >TEXT</option>
+                                    <option value="MEDIUMTEXT" >MEDIUMTEXT</option>
+                                    <option value="LONGTEXT" >LONGTEXT</option>
+                                    <option disabled="disabled">-</option>
+                                    <option value="BINARY" >BINARY</option>
+                                    <option value="VARBINARY" >VARBINARY</option>
+                                    <option disabled="disabled">-</option>
+                                    <option value="TINYBLOB" >TINYBLOB</option>
+                                    <option value="MEDIUMBLOB" >MEDIUMBLOB</option>
+                                    <option value="BLOB" >BLOB</option>
+                                    <option value="LONGBLOB" >LONGBLOB</option>
+                                    <option disabled="disabled">-</option>
+                                    <option value="ENUM ">ENUM</option>
+                                    <option value="SET" >SET</option>
+                                </optgroup>
+                                <optgroup label="Spatial">
+                                    <option value="GEOMETRY" >GEOMETRY</option>
+                                    <option value="POINT" >POINT</option>
+                                    <option value="LINESTRING" >LINESTRING</option>
+                                    <option value="POLYGON" >POLYGON</option>
+                                    <option value="MULTIPOINT" >MULTIPOINT</option>
+                                    <option value="MULTILINESTRING" >MULTILINESTRING</option>
+                                    <option value="MULTIPOLYGON" >MULTIPOLYGON</option>
+                                    <option value="GEOMETRYCOLLECTION" >GEOMETRYCOLLECTION</option>
+                                </optgroup>
+                            </select>
+                        </td>
+                        <td id="tdLength" >
+                            <input type="text" name="columnLength" value="" class="medium" />
+                        </td>
+                        <td id="tdDefaultType" >
+                            <select name="columnDefaultType" class="medium defaultValue">
+                                <option value="" selected="selected">None</option>
+                                <option value="USER_DEFINED">Defined as follows:</option>
+                                <option value="NULL">NULL</option>
+                                <option value="CURRENT_TIMESTAMP">CURRENT TIMESTAMP</option>
+                            </select>
+                        </td>
+                        <td id="tdCollations" >
+                            <select name="columnCollations" class="medium" >
+                                 <option value=""> - </option>
+                                #foreach($collation in $data.collations)
+                                    <option value="$collation[0];$collation[1]">$collation[0]</option>
+                                #end
+                            </select>
+                        </td>
+                        <td id="tdAttribute" >
+                            <select name="columnAttribute" class="medium" >
+                                <option value=""/>
+                                <option value="BINARY">BINARY</option>
+                                <option value="UNSIGNED">UNSIGNED</option>
+                                <option value="UNSIGNED ZEROFILL">UNSIGNED ZEROFILL</option>
+                                <option value="CURRENT_TIMESTAMP">on update CURRENT_TIMESTAMP</option>
+                            </select>
+                        </td>
+                        <td id="tdIsNULL" style="text-align: center;" >
+                            <select name="columnIsNULL" class="medium">
+                                <option value="0" >NO</option>
+                                <option value="1" >YES</option>
+                            </select>                            
+                        </td>
+                        <td id="tdIndex" >
+                            <select name="columnIndex" class="medium" >
+                                <option value="none">---</option>
+                                <option value="PRIMARY" >PRIMARY</option>
+                                <option value="UNIQUE" >UNIQUE</option>
+                                <option value="INDEX" >INDEX</option>
+                                <option value="FULLTEXT" >FULLTEXT</option>
+                            </select>
+                        </td>
+                        
+                        <td id="tdAutoIncrement" style="text-align: center;" >
+                            <select name="columnAutoIncrement" class="medium">
+                                <option value="0" >NO</option>
+                                <option value="1" >YES</option>
+                            </select>  
+                        </td>
+                        
+                        <td id="tdComment">
+                            <input type="text" name="columnComment" value="" class="medium" />
+                        </td>
+                    </tr>
+                #end
+                </tbody>
+            </table>
+        </div>
+    </div>
+</form>
+
+
+<script>
+
+$(document).ready(function(){
+
+    $('.addNewColumn').click(function(){
+        addNewColumn();
+        return false;
+    });
+
+    $('.saveTable').click(function(){
+        $('#idform').submit();
+        return false;
+    });
+    
+   
+    
+});
+
+function addNewColumn(){
+    var tr = $('<tr></tr>');
+    var td = $('<td></td>');
+    
+    var tdDelete = td.clone()
+    
+    var deleteAnchr = $('<a href="#" class="icon-remove action-icon alert" ></a>');
+    tdDelete.append(deleteAnchr);
+    
+    var tdName = td.clone()
+    tdName.html($('#tdName').html());
+    
+    var tdType = td.clone()
+    tdType.html($('#tdType').html());
+    
+    var tdLength = td.clone()
+    tdLength.html($('#tdLength').html());
+    
+    var tdDefaultType = td.clone()
+    tdDefaultType.html($('#tdDefaultType').html());
+
+    var tdCollations = td.clone()
+    tdCollations.html($('#tdCollations').html());
+    
+    var tdAttribute = td.clone()
+    tdAttribute.html($('#tdAttribute').html());
+    
+    var tdIsNULL = td.clone()
+    tdIsNULL.html($('#tdIsNULL').html());
+    
+    var tdIndex = td.clone()
+    tdIndex.html($('#tdIndex').html());
+    
+    var tdAutoIncrement = td.clone()
+    tdAutoIncrement.html($('#tdAutoIncrement').html());
+
+    
+    
+    var tdComment = td.clone()
+    tdComment.html($('#tdComment').html());
+    
+    tdIsNULL.css('text-align', 'center');
+    tdAutoIncrement.css('text-align', 'center');
+    tdDelete.css('text-align', 'center');
+    
+    tr.append(tdDelete);
+    tr.append(tdName);
+    tr.append(tdType);
+    tr.append(tdLength);
+    tr.append(tdDefaultType);
+    tr.append(tdCollations);
+    tr.append(tdAttribute);
+    tr.append(tdIsNULL);
+    tr.append(tdIndex);
+    tr.append(tdAutoIncrement);
+    
+    tr.append(tdComment);
+    
+    $('#after').append(tr);
+    
+    deleteAnchr.click(function(){
+        $(this).parent().parent().remove();
+        return false;
+    });
+    
+}
+
+</script>

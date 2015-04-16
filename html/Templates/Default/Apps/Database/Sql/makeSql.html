@@ -1,0 +1,29 @@
+<nav class="top-bar">
+    <ul>    
+        <li><a href="$fw.path(('Database/Show/tables'))" >Tables</a></li>
+        <li  class="active" ><a href="$fw.path('Database/Sql')" >SQL</a></li> 
+        
+        
+    </ul>
+</nav>
+
+<script src="$fw.tFile('js/codemirror/codemirror.js')"></script>
+<link rel="stylesheet" href="$fw.tFile('js/codemirror/codemirror.css')">
+
+<link rel="stylesheet" href="$fw.tFile('js/codemirror/addon/hint/show-hint.css')" />
+<script src="$fw.tFile('js/codemirror/languages/sql.js')"></script>
+<script src="$fw.tFile('js/codemirror/addon/hint/show-hint.js')"></script>
+<script src="$fw.tFile('js/codemirror/addon/hint/sql-hint.js')"></script>
+
+<textarea style="width: 100%; height: 200px;" id="mySqlTextarea">SELECT * FROM `` </textarea>
+
+<script>
+
+$(function(){
+    var myCodeMirror = CodeMirror.fromTextArea($('#mySqlTextarea')[0],{
+        lineNumbers:  true,
+        mode: 'sql'
+    });
+});
+
+</script>

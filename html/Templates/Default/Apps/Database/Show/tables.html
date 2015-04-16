@@ -1,0 +1,74 @@
+<nav class="top-bar">
+    <ul>    
+        <li ><a href="$fw.path(('Tables/TableManager/create'))" >New Table</a></li>
+        <li class="active" ><a href="" >Structure</a></li>
+        <li  ><a href="$fw.path('Database/Sql')" >SQL</a></li> 
+        <li  ><a href="" >Export</a></li>
+        <li  ><a href="" >Import</a></li>
+        <li  ><a href="" >Operations</a></li>
+        <li  ><a href="" >Functions</a></li>
+        <li  ><a href="" >Events</a></li>
+        <li  ><a href="" >Triggers</a></li>
+        
+    </ul>
+</nav>
+
+<div class="row collapse">
+    <div class="columns two mobile-one scrollbar-action">
+        <table>
+            <thead>
+                <th colspan="5" >Actions</th>
+            </thead>
+            <tbody>
+                #foreach($table in $data.tables)
+                <tr>
+                    <td><a href="$fw.path(('Tables/Show/browse/'+$table[0]))" class="icon-reorder action-icon" title="Browse" ></a></td>
+                    <td><a href="$fw.path(('Tables/Show/struct/'+$table[0]))" class="icon-list-alt action-icon" title="Structure" ></a></td>
+                    <td><a href="$fw.path(('Tables/TableManager/insert/'+$table[0]))" class="icon-plus-sign action-icon" title="Insert record"></a> </td>
+                    <td><a href="#" onclick="return admin.confirm('Are you sure to TRUNCATE this table?', '$fw.path(('Tables/TableManager/truncate/'+$table[0]))')" class="icon-trash action-icon" title="Truncate table" ></a></td>
+                    <td><a href="#" onclick="return admin.confirm('Are you sure to DROP this table?', '$fw.path(('Tables/TableManager/drop/'+$table[0]))')" class="icon-remove action-icon alert" title="Drop table"></a></td>
+                </tr>
+                #end 
+            </tbody>
+        </table>
+        <div style="height: 20px;"></div>
+    </div>
+    <div class="columns ten scrollbar content mobile-three">
+        
+        <table>
+            <thead>
+               <th>Name</th>
+               <th>Engine</th>
+               <th>Version</th>
+               <th>Row format</th>
+               <th>Rows</th>
+               <th>Average row length</th>
+               <th>Data length</th>
+               <th>Max data length</th>
+               <th>Index length</th>
+               <th>Data free</th>
+               <th>Auto increment</th>
+               <th>Create time</th>
+               <th>Update time</th>
+               <th>Check time</th>
+               <th>Collation</th>
+               <th>Checksum</th>
+               <th>Create options</th>
+               <th>Comment</th>
+            </thead>
+            <tbody>
+                #foreach($table in $data.tables)
+                    <tr>
+                    #foreach($column in $table)
+                        <td>
+                            #if($column)
+                                $column
+                            #end                        
+                        </td>
+                    #end
+                    </tr>
+                #end
+            </tbody>
+        </table>
+    </div>
+</div>

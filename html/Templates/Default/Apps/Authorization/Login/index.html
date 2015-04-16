@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+
+<!-- paulirish.com/2008/conditional-stylesheets-vs-css-hacks-answer-neither/ -->
+<!--[if IE 8]>    <html class="no-js lt-ie9" lang="pl"> <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="pl"> <!--<![endif]-->
+
+<head>
+  <meta charset="utf-8" />
+
+  <!-- Set the viewport width to device width for mobile -->
+  <meta name="viewport" content="width=device-width" />
+
+  <title>PythonMyAdmin</title>
+
+  <!-- Included CSS Files, use foundation.css if you do not want minified code -->
+  <link rel="stylesheet" href="$fw.tFile('css/foundation.css')">
+  
+
+ 
+  
+</head>
+
+    <body>
+        #if($data.message != ''):
+            <div class="row" >
+                <div class="columns twelve"> 
+                    <div class="alert-box $data.type">
+                        $data.message
+                        <a href="" class="close">&times;</a>
+                    </div>
+                </div>
+            </div>
+        #end
+        
+        <div class="row">
+            <div class="columns five centered">
+                <form action="" method="post"> 
+                    <fieldset>
+                        <legend>PythonMyAdmin</legend>
+                        <div class="row">
+                            <div class="columns five">
+                                <label for="login" >Login:</label>
+                            </div>
+                            <div class="columns seven">
+                                <input type="text" name="login" id="login" />
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="columns five">
+                                <label for="password" >Password:</label>
+                            </div>
+                            <div class="columns seven">
+                                <input type="password" name="password" id="password" />
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="columns twelve">                            
+                                <input type="submit" class="button success right" value="Sign In"  />
+                            </div>
+                        </div>
+                    </fieldset>
+                </form>
+            </div>
+        </div>
+        
+    </body>
+</html>

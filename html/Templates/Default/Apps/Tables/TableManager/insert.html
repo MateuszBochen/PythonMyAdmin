@@ -1,0 +1,176 @@
+<nav class="top-bar">
+    <ul>
+       
+        <li><a href="$fw.getBack()" >Back</a></li>        
+        <li><a href="$fw.path(('Database/Show/tables'))" >Tables</a></li>        
+        <li class="has-button" ><a class="button success saveTable" href="#" >Insert</a></li>    
+        
+    </ul>
+</nav>
+
+
+<form action="$fw.path(('Tables/TableManager/save/'+$data.table))" method="post" id="idform" >
+<div class="row">
+    <div class="columns twelve">
+        <fieldset>
+            <legend>Put the values</legend>    
+               <table>
+                <thead>
+                    <th>
+                        Column name
+                    </th>
+                    <th>
+                        Function
+                    </th>
+                    <th>
+                        Value
+                    </th>
+                </thead>
+                <tbody>
+                #set ($index = 0)
+                #foreach($column in $data.columns)
+                    <tr>
+                        <td>
+                            <div class="row input-row">
+                                <div class="columns twelve">
+                                    <label>$column[0] <i>$column[1]</i></label>
+                                    <input type="hidden" name="controlInput" value="1" /> 
+                                </div>
+                            </div>
+                        </td>
+                        <td>
+                            <select name="functions" >
+                                #if($data.postValues.functions[$index])
+                                     <option value="$data.postValues.functions[$index]" >$data.postValues.functions[$index]</option>
+                                #end
+                                <option value="" ></option>
+                                <option value="ABS" >ABS</option>
+                                <option value="ACOS" >ACOS</option>
+                                <option value="ASCII" >ASCII</option>
+                                <option value="ASIN" >ASIN</option>
+                                <option value="ATAN" >ATAN</option>
+                                <option value="BIT_LENGTH" >BIT_LENGTH</option>
+                                <option value="BIT_COUNT" >BIT_COUNT</option>
+                                <option value="CEILING" >CEILING</option>
+                                <option value="CHAR_LENGTH" >CHAR_LENGTH</option>
+                                <option value="CONNECTION_ID" >CONNECTION_ID</option>
+                                <option value="COS" >COS</option>
+                                <option value="COT" >COT</option>
+                                <option value="CRC32" >CRC32</option>
+                                <option value="DAYOFMONTH" >DAYOFMONTH</option>
+                                <option value="DAYOFWEEK" >DAYOFWEEK</option>
+                                <option value="DAYOFYEAR" >DAYOFYEAR</option>
+                                <option value="DEGREES" >DEGREES</option>
+                                <option value="EXP" >EXP</option>
+                                <option value="FLOOR" >FLOOR</option>
+                                <option value="HOUR" >HOUR</option>
+                                <option value="INET_ATON" >INET_ATON</option>
+                                <option value="LENGTH" >LENGTH</option>
+                                <option value="LN" >LN</option>
+                                <option value="LOG" >LOG</option>
+                                <option value="LOG2" >LOG2</option>
+                                <option value="LOG10" >LOG10</option>
+                                <option value="MICROSECOND" >MICROSECOND</option>
+                                <option value="MINUTE" >MINUTE</option>
+                                <option value="MONTH" >MONTH</option>
+                                <option value="OCT" >OCT</option>
+                                <option value="ORD" >ORD</option>
+                                <option value="PI" >PI</option>
+                                <option value="QUARTER" >QUARTER</option>
+                                <option value="RADIANS" >RADIANS</option>
+                                <option value="RAND" >RAND</option>
+                                <option value="ROUND" >ROUND</option>
+                                <option value="SECOND" >SECOND</option>
+                                <option value="SIGN" >SIGN</option>
+                                <option value="SIN" >SIN</option>
+                                <option value="SQRT" >SQRT</option>
+                                <option value="TAN" >TAN</option>
+                                <option value="TO_DAYS" >TO_DAYS</option>
+                                <option value="TO_SECONDS" >TO_SECONDS</option>
+                                <option value="TIME_TO_SEC" >TIME_TO_SEC</option>
+                                <option value="UNCOMPRESSED_LENGTH" >UNCOMPRESSED_LENGTH</option>
+                                <option value="UNIX_TIMESTAMP" >UNIX_TIMESTAMP</option>
+                                <option value="UUID_SHORT" >UUID_SHORT</option>
+                                <option value="WEEK" >WEEK</option>
+                                <option value="WEEKDAY" >WEEKDAY</option>
+                                <option value="WEEKOFYEAR" >WEEKOFYEAR</option>
+                                <option value="YEARWEEK" >YEARWEEK</option>    
+                                <option value="" disabled="disabled">--------</option>
+                                <option value="AES_ENCRYPT" >AES_ENCRYPT</option>
+                                <option value="BIN" >BIN</option>
+                                <option value="CHAR" >CHAR</option>
+                                <option value="COMPRESS" >COMPRESS</option>
+                                <option value="CURRENT_DATE" >CURRENT_DATE</option>
+                                <option value="CURRENT_TIME" >CURRENT_TIME</option>
+                                <option value="CURRENT_USER" >CURRENT_USER</option>
+                                <option value="DATABASE" >DATABASE</option>
+                                <option value="DATE" >DATE</option>
+                                <option value="DAYNAME" >DAYNAME</option>
+                                <option value="DES_DECRYPT" >DES_DECRYPT</option>
+                                <option value="DES_ENCRYPT" >DES_ENCRYPT</option>
+                                <option value="ENCRYPT" >ENCRYPT</option>
+                                <option value="FROM_DAYS" >FROM_DAYS</option>
+                                <option value="FROM_UNIXTIME" >FROM_UNIXTIME</option>
+                                <option value="HEX" >HEX</option>
+                                <option value="INET_NTOA" >INET_NTOA</option>
+                                <option value="LAST_DAY" >LAST_DAY</option>
+                                <option value="LOAD_FILE" >LOAD_FILE</option>
+                                <option value="LOWER" >LOWER</option>
+                                <option value="LTRIM" >LTRIM</option>
+                                <option value="MD5" >MD5</option>
+                                <option value="MONTHNAME" >MONTHNAME</option>
+                                <option value="NOW" >NOW</option>
+                                <option value="OLD_PASSWORD" >OLD_PASSWORD</option>
+                                <option value="PASSWORD" >PASSWORD</option>
+                                <option value="QUOTE" >QUOTE</option>
+                                <option value="REVERSE" >REVERSE</option>
+                                <option value="RTRIM" >RTRIM</option>
+                                <option value="SEC_TO_TIME" >SEC_TO_TIME</option>
+                                <option value="SHA1" >SHA1</option>
+                                <option value="SOUNDEX" >SOUNDEX</option>
+                                <option value="SPACE" >SPACE</option>
+                                <option value="SYSDATE" >SYSDATE</option>
+                                <option value="TIME" >TIME</option>
+                                <option value="TIMESTAMP" >TIMESTAMP</option>
+                                <option value="TRIM" >TRIM</option>
+                                <option value="UNCOMPRESS" >UNCOMPRESS</option>
+                                <option value="UNHEX" >UNHEX</option>
+                                <option value="UPPER" >UPPER</option>
+                                <option value="USER" >USER</option>
+                                <option value="UTC_DATE" >UTC_DATE</option>
+                                <option value="UTC_TIME" >UTC_TIME</option>
+                                <option value="UTC_TIMESTAMP" >UTC_TIMESTAMP</option>
+                                <option value="UUID" >UUID</option>
+                                <option value="VERSION" >VERSION</option>
+                                <option value="YEAR" >YEAR</option>
+                            </select>
+                        </td>
+                        <td>
+                            <input type="text" name="values" value="#if($data.postValues.text[$index])$data.postValues.text[$index]#end" /> 
+                        </td>
+                    </tr>
+                    
+                    #set ($index = $index + 1)
+                #end
+                </tbody>
+                </table>
+        </fieldset>
+    </div>    
+</div>
+</form>
+
+
+<script>
+
+$(document).ready(function(){
+
+    $('.saveTable').click(function(){
+        $('#idform').submit();
+        return false;
+    });
+    
+   
+    
+});
+
+</script>

@@ -1,0 +1,102 @@
+<nav class="top-bar">
+    <ul>
+       
+        <li><a href="$fw.path(('Database/Show/tables'))" >Tables</a></li>        
+        <li><a href="$fw.path(('Tables/Show/browse/'+$data.activeTable))" >Browse</a></li>        
+        <li class="active" ><a href="$fw.path(('Tables/Show/struct/'+$data.activeTable))" >Structure</a></li>
+        <li ><a href="$fw.path(('Tables/TableManager/insert/'+$data.activeTable))" >Insert</a></li>
+    </ul>
+</nav>
+
+<div class="row collapse">
+    <div class="columns two mobile-one scrollbar-action">
+        <form action="$fw.path('Tables/TableManager/changeColumns')" method="post" id="changeColumnsForm">
+            <table>
+                <thead>
+                    <th colspan="4" >Actions</th>
+                </thead>
+                <tbody>
+                    #set ($i = 0)
+                    #foreach( $column in $data.columns )
+                        <tr>
+                            <td><input type="checkbox" name="columnToChange" value="$column[0]" /></td>
+                            <td>change</td>
+                            <td style="text-align: right;" >
+                            #if($i == 0)
+                                <a href="$fw.path(('Tables/TableManager/createNewColumn/'+$data.activeTable+'/first/'+$column[0]))" class="icon-reply action-icon rotate-90" title="Add column before this" ></a>
+                            #end
+                            <a href="$fw.path(('Tables/TableManager/createNewColumn/'+$data.activeTable+'/after/'+$column[0]))" class="icon-mail-forward action-icon rotate-90" title="Add column after this" ></a></td>
+                            <td><a href="#" onclick="return admin.confirm('Are you sure to DROP this column?', '$fw.path(('Tables/TableManager/dropColumn/'+$data.activeTable+'/'+$column[0]))')" class="icon-remove action-icon alert" title="Drop column"></a></td>
+                        </tr>
+                        #set ($i = $i+1)
+                    #end
+                </tbody>
+            </table>
+        </form>
+    </div>
+    <div class="columns ten scrollbar content mobile-three">                
+        <table>
+            <thead>
+                <th>Field</th>
+                <th>Type</th>
+                <th>Collate</th>
+                <th>NULL</th>
+                <th>Key</th>
+                <th>Default</th>
+                <th>Extra</th>
+            </thead>
+            <tbody>
+                #foreach( $column in $data.columns )
+                    <tr>
+                        <td>
+                            #if($column[3] == 'PRI')
+                                <strong><u>$column[0]</u></strong>
+                            #else
+                                $column[0]
+                            #end
+                        </td>
+                        <td>$column[1]</td>
+                        <td>                            
+                            #if($column[2])
+                                $column[2]
+                            #end
+                        </td>
+                        <td>$column[3]</td>
+                        <td>$column[4]</td>
+                        <td>
+                            #if($column[5]) 
+                                $column[5] 
+                            #end</td>
+                        <td>$column[6]</td>
+                    </tr>
+                #end
+            </tbody>
+        </table>
+    </div>
+</div>
+<div class="row collapse">
+    <div class="columns two">
+       
+        <input type="checkbox" class="auto-check" data-name="columnToChange" style="padding-left: 24px;"/>
+    
+        <select name="" id="submitMulti" style="width: 78%; float: right; height: 20px;" class="small" >
+            <option value=""> - </option>
+            <option value="delete">Delete</option>
+            <option value="change">Change</option>
+        </select>
+        
+    </div>
+    <div class="columns ten">
+    
+    </div>
+</div>
+
+<script>
+$('#submitMulti').change(function(){
+    var src = '$fw.path(('Tables/TableManager/changeColumns/'+$data.activeTable))';
+    if($(this).val() == 'delete')
+        var src = '$fw.path(('Tables/TableManager/multiColumnsDrop/'+$data.activeTable))';
+    $('#changeColumnsForm').attr('action', src).submit()
+});
+
+</script>
